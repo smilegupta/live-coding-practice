@@ -7,7 +7,8 @@ function getArraysIntersection(a1, a2) {
 }
 
 export const getFilteredData = (flitersValues, arr ) => { 
-  if(!flitersValues.length) return arr
+  console.log('arr: ', arr);
+  if(flitersValues.length===0) return arr
   let filteredIds = []
 
 arr.forEach(item => {
@@ -22,7 +23,8 @@ arr.forEach(item => {
 
  filteredIds =[...new Set(filteredIds)]
  
-let tmp=arr.filter(item=>filteredIds.includes(item.itemId))
+let tmp = arr.filter(item => filteredIds.includes(item.itemId))
+  
 
   return tmp;
 }

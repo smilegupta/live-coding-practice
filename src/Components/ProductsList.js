@@ -3,8 +3,7 @@ import { productsList } from "../dummyData";
 import {
   useState,
   useContext,
-  useEffect,
-  useMemo
+  useEffect
 } from "react";
 import {FilterContext} from "../context/filterContext"
 import { getFilteredData} from "../utils/getFilterData"
@@ -14,20 +13,17 @@ const ProductsList = () => {
   const [productList, setProductList] = useState(productsList);
   const {flitersValues} = useContext(FilterContext)
   
-  let data = productList;
+  let data = [...productList];
   
-  data = useMemo(() => {
-    console.log('flitersValues: ', flitersValues);
-
-  return getFilteredData(flitersValues,productList)
-}, [flitersValues,productList])
-
   useEffect(() => {
-    setProductList(data)
+    return () => {
+      data = getFilteredData(flitersValues, productsList)
+      setProductList(data)
+      
+    }
   }, [flitersValues])
 
  
-
   const sortHighToLow = (a, b) => {
     if (a.price > b.price) {
       return -1;
