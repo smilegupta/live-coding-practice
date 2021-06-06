@@ -1,9 +1,10 @@
-import {useState} from 'react'
+import {useContext} from 'react'
 import Accordion from './Accoridan/Accordian'
 import {brandList} from "../dummyData"
+import {FilterContext} from "../context/filterContext"
 
 const FilterSection = () => {
-    let [flitersValues, setFilterValues] = useState([])
+  const {flitersValues, setFlitersValues} = useContext(FilterContext)
     return (
         <div>
           <div className="row">
@@ -14,9 +15,9 @@ const FilterSection = () => {
                 <h6> Clear All </h6>
               </div>
           </div>
-          <Accordion  displayHeading="Size" filterArray={["men", "women"]} flitersValues={flitersValues} setFilterValues={setFilterValues} />
-          <Accordion  displayHeading="Brand" filterArray={["S", "M", "L", "XL"]} flitersValues={flitersValues} setFilterValues={setFilterValues} />
-          <Accordion  displayHeading="Ideal For" filterArray={brandList} flitersValues={flitersValues} setFilterValues={setFilterValues} />
+          <Accordion  displayHeading="Ideal For" filterArray={["men", "women"]} flitersValues={flitersValues} setFlitersValues={setFlitersValues}/>
+          <Accordion  displayHeading="Sizes" filterArray={["S", "M", "L", "XL"]} flitersValues={flitersValues} setFlitersValues={setFlitersValues}/>
+          <Accordion  displayHeading="Brand" filterArray={brandList} flitersValues={flitersValues} setFlitersValues={setFlitersValues}/>
         </div>
     )
 }

@@ -5,7 +5,8 @@ import PageContent from './Components/PageContent';
 function App() {
   return (
     <div className="App">
-    <NavBar />
+      <NavBar />
+      
     <PageContent />
     </div>
   );

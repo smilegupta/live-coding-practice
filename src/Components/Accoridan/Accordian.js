@@ -3,22 +3,28 @@ import { useState, useRef } from "react";
 import Chevron from "./Chevron";
 import "./Accordian.css";
 
-function Accordion({ displayHeading, filterArray, flitersValues, setFilterValues }) {
+function Accordion({
+  displayHeading,
+  filterArray,
+  flitersValues,
+  setFlitersValues
+}) {
   // State Variables
   const [setActive, setActiveState] = useState("");
   const [setHeight, setHeightState] = useState("0px");
   const [setRotate, setRotateState] = useState("accordion__icon");
   const content = useRef(null);
 
-  const filterDataHandler = (input) => {
-    if(flitersValues.includes(input)){
-
+  const filterCheckboxHandler = (input, e) => {
+    if (flitersValues?.includes(input)) {
+      e.target.checked = false;
+      flitersValues.splice(flitersValues.indexOf(input), 1)
     } else {
-        flitersValues.push(input)
+      e.target.checked = true;
+      flitersValues.push(input)
     }
-   
-  }
-  
+    setFlitersValues([...flitersValues])
+  };  
 
   const toggleAccordion = () => {
     setActiveState(setActive === "" ? "active" : "");
@@ -47,11 +53,10 @@ function Accordion({ displayHeading, filterArray, flitersValues, setFilterValues
               <input
                 className="form-check-input font-12"
                 type="checkbox"
-                id={filters.replace(/ /g, "")}
                 style={{ marginTop: "7px" }}
-                value={filters} 
-                checked={flitersValues.includes(filters)}
-                onChange={() => filterDataHandler(filters)}
+                // value={filters}
+                // checked = {!flitersValues.includes(filters)}
+                onChange={(e) => filterCheckboxHandler(filters, e)}
               />
               <label
                 className="form-check-label font-12 text-break"

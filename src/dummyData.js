@@ -1,4 +1,7 @@
 export const brandList = ["NIKE", "PUMA", "HRX", "ADIDAS"]
+// ["men","S","NIKE"]
+
+
 
 export const productsList = [
   {
@@ -84,7 +87,7 @@ export const productsList = [
     price: 1049,
     mrp: 2199,
     discount: 52,
-    itemId: 13,
+    itemId: 6,
     brand: "HRX",
     category: "Sweatshirts",
     gender: "men",
@@ -99,7 +102,7 @@ export const productsList = [
     price: 1041,
     mrp: 1799,
     discount: 42,
-    itemId: 11,
+    itemId: 7,
     brand: "ADIDAS",
     category: "T-shirts",
     gender: "women",
@@ -114,7 +117,7 @@ export const productsList = [
     price: 1713,
     mrp: 2299,
     discount: 25,
-    itemId: 10,
+    itemId: 8,
     brand: "ADIDAS",
     category: "Track Pants",
     gender: "women",

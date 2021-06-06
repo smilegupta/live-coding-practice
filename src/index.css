@@ -27,3 +27,7 @@ code {
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;  
 }
+
+.font-12{
+  font-size: 12px;
+}

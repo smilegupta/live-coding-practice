@@ -1,10 +1,32 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { productsList } from "../dummyData";
-import { useState } from "react";
+import {
+  useState,
+  useContext,
+  useEffect,
+  useMemo
+} from "react";
+import {FilterContext} from "../context/filterContext"
+import { getFilteredData} from "../utils/getFilterData"
 
 const ProductsList = () => {
   // State Varaibles
   const [productList, setProductList] = useState(productsList);
+  const {flitersValues} = useContext(FilterContext)
   
+  let data = productList;
+  
+  data = useMemo(() => {
+    console.log('flitersValues: ', flitersValues);
+
+  return getFilteredData(flitersValues,productList)
+}, [flitersValues,productList])
+
+  useEffect(() => {
+    setProductList(data)
+  }, [flitersValues])
+
+ 
 
   const sortHighToLow = (a, b) => {
     if (a.price > b.price) {
@@ -40,7 +62,7 @@ const ProductsList = () => {
         </span>{" "}
       </h6>
       <div className="row">
-        {productList && productList.map((product) => (
+        {data && data.map((product) => (
           <div className="col-md-3 col-xs-12 mb-2" key={product.itemId}>
             <div className="card h-100">
               <img
