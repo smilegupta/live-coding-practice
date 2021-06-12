@@ -25,6 +25,36 @@ const Cart = () => {
     }
   };
 
+  const increasingValue = (data) => {
+    var dataCart = JSON.parse(localStorage.getItem("cart"));
+    if (dataCart.find((p) => p.title === data.title)) {
+      data["amount"] = dataCart.find((p) => p.title === data.title).amount + 1;
+      dataCart.splice(
+        dataCart.findIndex((p) => p.title === data.title),
+        1,
+        data
+      );
+      console.log(dataCart);
+      localStorage.setItem("cart", JSON.stringify(dataCart));
+    }
+    fetchData();
+  };
+
+  const decreaingingValue = (data) => {
+    var dataCart = JSON.parse(localStorage.getItem("cart"));
+    if (dataCart.find((p) => p.title === data.title)) {
+      data["amount"] = dataCart.find((p) => p.title === data.title).amount - 1;
+      dataCart.splice(
+        dataCart.findIndex((p) => p.title === data.title),
+        1,
+        data
+      );
+      console.log(dataCart);
+      localStorage.setItem("cart", JSON.stringify(dataCart));
+    }
+    fetchData();
+  };
+
   const removeElement = (data) => {
     const items = cartData.filter((item) => item.itemId !== data.itemId);
     console.log(items);
@@ -118,9 +148,21 @@ const Cart = () => {
                         className="w-100"
                         alt={product.title}
                       />{" "}
-                      <button className="mt-2"> - </button>{" "}
+                      <button
+                        className="mt-2"
+                        onClick={() => decreaingingValue(product)}
+                      >
+                        {" "}
+                        -{" "}
+                      </button>{" "}
                       <span className="mt-2"> {product.amount} </span>{" "}
-                      <button className="mt-2"> + </button>
+                      <button
+                        className="mt-2"
+                        onClick={() => increasingValue(product)}
+                      >
+                        {" "}
+                        +{" "}
+                      </button>
                     </div>
 
                     <div className="col-md-8">
