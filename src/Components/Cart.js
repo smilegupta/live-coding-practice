@@ -109,8 +109,10 @@ const Cart = () => {
     if (localStorage.getItem("save") == null) {
       localStorage.setItem("save", "[]");
     }
+    var saveLaterCart = JSON.parse(localStorage.getItem('save'))
     const items = cartData.filter((item) => item.itemId === data.itemId);
-    localStorage.setItem("save", JSON.stringify(items));
+    saveLaterCart.push(...items)
+    localStorage.setItem("save", JSON.stringify(saveLaterCart));
     const itemsToKeep = cartData.filter((item) => item.itemId !== data.itemId);
     localStorage.setItem("cart", JSON.stringify(itemsToKeep));
     fetchSaveLaterData();
