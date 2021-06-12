@@ -11,9 +11,9 @@ const FilterSection = () => {
               <div className="col-6"> 
                 <h6> Filters </h6>
               </div>
-              <div className="col-6 text-end"> 
+              {/* <div className="col-6 text-end"> 
                 <h6> Clear All </h6>
-              </div>
+              </div> */}
           </div>
           <Accordion  displayHeading="Ideal For" filterArray={["men", "women"]} flitersValues={flitersValues} setFlitersValues={setFlitersValues}/>
           <Accordion  displayHeading="Sizes" filterArray={["S", "M", "L", "XL"]} flitersValues={flitersValues} setFlitersValues={setFlitersValues}/>

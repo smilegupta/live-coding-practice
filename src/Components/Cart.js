@@ -1,19 +1,109 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+toast.configure();
 
 const Cart = () => {
   const [cartData, setCartData] = useState([]);
+  const [saveLaterData, setSaveLaterData] = useState([]);
 
   useEffect(() => {
+    fetchData();
+    fetchSaveLaterData();
+  }, []);
+
+  const fetchData = () => {
     var dataCart = JSON.parse(localStorage.getItem("cart"));
     if (dataCart) {
       setCartData([...dataCart]);
     }
-  }, []);
+  };
+
+  const fetchSaveLaterData = () => {
+    var saveLater = JSON.parse(localStorage.getItem("save"));
+    if (saveLater) {
+      setSaveLaterData([...saveLater]);
+    }
+  };
+
+  const removeElement = (data) => {
+    const items = cartData.filter((item) => item.itemId !== data.itemId);
+    console.log(items);
+    localStorage.setItem("cart", JSON.stringify(items));
+    fetchData();
+    const message = "Item has been successfully removed from cart";
+    toast.success(message, {
+      position: "top-right",
+      autoClose: 0,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
+  };
+
+  const removeElementFromSaveLater = (data) => {
+    const items = saveLaterData.filter((item) => item.itemId !== data.itemId);
+    console.log(items);
+    localStorage.setItem("save", JSON.stringify(items));
+    fetchSaveLaterData();
+    const message = "Item has been successfully removed from Save Later List";
+    toast.success(message, {
+      position: "top-right",
+      autoClose: 0,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
+  };
+
+  const addToCart = (data) => {
+    const items = saveLaterData.filter((item) => item.itemId === data.itemId);
+    var dataCart = JSON.parse(localStorage.getItem("cart"));
+    dataCart.push(...items);
+    localStorage.setItem("cart", JSON.stringify(dataCart));
+    fetchData();
+    const itemsToKeep = saveLaterData.filter(
+      (item) => item.itemId !== data.itemId
+    );
+    localStorage.setItem("save", JSON.stringify(itemsToKeep));
+    fetchSaveLaterData();
+    const message = "Item has been added to Cart";
+    toast.success(message, {
+      position: "top-right",
+      autoClose: 0,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
+  };
+
+  const saveLater = (data) => {
+    if (localStorage.getItem("save") == null) {
+      localStorage.setItem("save", "[]");
+    }
+    const items = cartData.filter((item) => item.itemId === data.itemId);
+    localStorage.setItem("save", JSON.stringify(items));
+    const itemsToKeep = cartData.filter((item) => item.itemId !== data.itemId);
+    localStorage.setItem("cart", JSON.stringify(itemsToKeep));
+    fetchSaveLaterData();
+    fetchData();
+    const message = "Item has been added to Save to Later List";
+    toast.success(message, {
+      position: "top-right",
+      autoClose: 0,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
+  };
 
   return (
     <div className="container">
       <div className="row mb-5">
-        <div className="col-md-9 col-xs-12 mb-2">
+        <div className="col-md-9 col-xs-12 mb-4">
           <div className="card h-100 m-2">
             <div className="card-body">
               <h4> My Cart ({cartData.length}) </h4>
@@ -66,11 +156,17 @@ const Cart = () => {
                         )}
                       </h6>
                       <div className="row mt-4">
-                        <div className="col-3 cursor-pointer">
+                        <div
+                          className="col-3 cursor-pointer"
+                          onClick={() => saveLater(product)}
+                        >
                           {" "}
                           <h5> Save For Later </h5>
                         </div>
-                        <div className="col-3 cursor-pointer">
+                        <div
+                          className="col-3 cursor-pointer"
+                          onClick={() => removeElement(product)}
+                        >
                           {" "}
                           <h5> Remove </h5>
                         </div>
@@ -117,8 +213,79 @@ const Cart = () => {
             </div>
           </div>
         </div>
+        <div className="col-md-9 col-xs-12 mb-2">
+          <div className="card h-100 m-2">
+            <div className="card-body">
+              <h4> Save For Later ({saveLaterData.length}) </h4>
+              <hr />
+              {saveLaterData.map((product) => (
+                <div className="col-12 mb-3" key={product.itemId}>
+                  <div className="row">
+                    <div className="col-md-2">
+                      {" "}
+                      <img
+                        src={product.imageURL}
+                        className="w-100"
+                        alt={product.title}
+                      />{" "}
+                    </div>
+
+                    <div className="col-md-8">
+                      <h6 className="card-text overflow-text">
+                        {" "}
+                        <strong> {product.title} </strong>
+                        {product.flipkartAssured && (
+                          <img
+                            src="https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/fa_62673a.png"
+                            alt="flipkart assured"
+                            className="p-1"
+                            width="75px"
+                            style={{ marginTop: "-3px" }}
+                          />
+                        )}
+                      </h6>
+                      <h6>
+                        <strong className="text-muted"> Size: </strong>{" "}
+                        {product.size.join(",")}
+                      </h6>
+                      <h6>
+                        {product.mrp === product.price ? (
+                          `₹${product.mrp}`
+                        ) : (
+                          <span>
+                            <span> {`₹${product.price}`} </span>{" "}
+                            <s className="mx-1 text-muted">{`₹${product.mrp}`}</s>{" "}
+                            <span style={{ color: "green" }}>
+                              {" "}
+                              {`${product.discount}% off`}{" "}
+                            </span>
+                          </span>
+                        )}
+                      </h6>
+                      <div className="row mt-4">
+                        <div
+                          className="col-3 cursor-pointer"
+                          onClick={() => addToCart(product)}
+                        >
+                          {" "}
+                          <h5> Add to Cart </h5>
+                        </div>
+                        <div
+                          className="col-3 cursor-pointer"
+                          onClick={() => removeElementFromSaveLater(product)}
+                        >
+                          {" "}
+                          <h5> Remove </h5>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
-      {console.log(cartData)}
     </div>
   );
 };
