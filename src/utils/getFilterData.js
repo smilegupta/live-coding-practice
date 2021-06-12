@@ -7,7 +7,6 @@ function getArraysIntersection(a1, a2) {
 }
 
 export const getFilteredData = (flitersValues, arr ) => { 
-  console.log('arr: ', arr);
   if(flitersValues.length===0) return arr
   let filteredIds = []
 

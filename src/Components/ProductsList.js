@@ -7,6 +7,8 @@ import {
 } from "react";
 import {FilterContext} from "../context/filterContext"
 import { getFilteredData} from "../utils/getFilterData"
+import { toast } from "react-toastify";
+toast.configure();
 
 const ProductsList = () => {
   // State Varaibles
@@ -23,6 +25,54 @@ const ProductsList = () => {
     }
   }, [flitersValues])
 
+  const AddToCart = (data) => {
+     if(localStorage.getItem('cart') == null){
+      localStorage.setItem('cart', '[]')
+    }
+    var dataCart = JSON.parse(localStorage.getItem('cart'))
+    var product = data
+    product['amount'] = 1
+
+    if (dataCart.length === 0 || !dataCart.find((p) => p.title === product.title)) {
+      dataCart.push(product)
+      localStorage.setItem('cart', JSON.stringify(dataCart))
+    } else if (dataCart.find((p) => p.title === product.title)) {
+      product['amount'] += dataCart.find((p) => p.title === product.title).amount
+      dataCart.splice(
+        dataCart.findIndex((p) => p.title === product.title),
+        1,
+        product
+      )
+      localStorage.setItem('cart', JSON.stringify(dataCart))
+    }
+
+    const message = "Bingo! Item added to cart.";
+    toast.success(message, {
+      position: "top-right",
+      autoClose: 0,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
+
+    // if(localStorage.getItem('live-coding') == null){
+    //   localStorage.setItem('live-coding', '[]')
+    // }
+
+    // let old_data = JSON.parse(localStorage.getItem('live-coding'));
+    // old_data.push(data)
+    // localStorage.setItem('live-coding', JSON.stringify(old_data))
+    // const message = "Bingo! Item added to cart.";
+    // toast.success(message, {
+    //   position: "top-right",
+    //   autoClose: 0,
+    //   hideProgressBar: false,
+    //   closeOnClick: true,
+    //   pauseOnHover: true,
+    //   draggable: true,
+    // });
+  }
  
   const sortHighToLow = (a, b) => {
     if (a.price > b.price) {
@@ -59,7 +109,7 @@ const ProductsList = () => {
       </h6>
       <div className="row">
         {data && data.map((product) => (
-          <div className="col-md-3 col-xs-12 mb-2" key={product.itemId}>
+          <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 mb-2" key={product.itemId}>
             <div className="card h-100">
               <img
                 src={product.imageURL}
@@ -96,6 +146,8 @@ const ProductsList = () => {
                 </h6>
                 <strong className="text-muted"> Size: </strong>{" "}
                 {product.size.join(",")}
+                <br />
+                <button className="btn btn-primary mt-2" onClick={() => AddToCart(product)}> Add to cart </button>
               </div>
             </div>
           </div>

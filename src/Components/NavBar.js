@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
   return (
@@ -8,13 +9,16 @@ const NavBar = () => {
           <div className="d-flex px-3">
             <div className="row w-100">
               <div className="col-md-7 col-xs-12 d-flex">
-                <span className="navbar-brand">
+              <Link to="/">
+              <span className="navbar-brand my-2">
                   <img
                     alt="flipkartlogo"
                     height="24"
                     src="https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/fk-plus_3b0baa.png"
                   />
                 </span>
+                </Link>
+                
                 <form style={{ flex: "auto" }}>
                   <div className="input-group">
                     <input
@@ -37,7 +41,7 @@ const NavBar = () => {
                   {" "}
                   <span className="mx-5"> Login </span>
                 </button>
-                <span
+                {/* <span
                   className="mx-3 d-flex my-auto"
                   style={{ color: "white", fontWeight: "bold" }}
                 >
@@ -47,9 +51,10 @@ const NavBar = () => {
                     className="las la-angle-down my-auto"
                     style={{ fontSize: "16px" }}
                   ></i>{" "}
-                </span>
+                </span> */}
+                <Link to="/cart">
                 <span
-                  className="mx-3 d-flex my-auto"
+                  className="mx-3 d-flex my-2 cursor-pointer"
                   style={{ color: "white", fontWeight: "bold" }}
                 >
                   {" "}
@@ -59,6 +64,7 @@ const NavBar = () => {
                   ></i>{" "}
                   Cart{" "}
                 </span>
+                </Link>
               </div>
             </div>
           </div>
