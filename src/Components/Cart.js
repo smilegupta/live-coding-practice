@@ -234,21 +234,21 @@ const Cart = () => {
               <h6>
                 {" "}
                 Price ({cartData.length} items): ₹
-                {cartData.reduce((a, curr) => a + curr.mrp, 0)}{" "}
+                {cartData.reduce((sum, curr) => sum + (curr.mrp*curr.amount), 0)}
               </h6>
               <h6>
                 {" "}
                 Discount:{" "}
                 <span style={{ color: "green" }}>
                   -₹
-                  {cartData.reduce((a, curr) => a + (curr.mrp - curr.price), 0)}
+                  {cartData.reduce((a, curr) => a + ((curr.mrp - curr.price)*curr.amount), 0)}
                 </span>{" "}
               </h6>
               <hr />
               <h5>
                 {" "}
                 Total Amount: ₹{cartData.reduce(
-                  (a, curr) => a + curr.price,
+                  (a, curr) => a + (curr.price*curr.amount),
                   0
                 )}{" "}
               </h5>
