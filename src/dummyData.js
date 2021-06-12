@@ -18,6 +18,7 @@ export const productsList = [
     gender: "men",
     flipkartAssured: true,
     size: ["S", "M", "L", "XL"],
+    quantity: 10
   },
   {
     imageURL:
@@ -33,6 +34,7 @@ export const productsList = [
     gender: "women",
     flipkartAssured: true,
     size: ["S", "M", "L"],
+    quantity: 5
   },
   {
     imageURL:
@@ -48,6 +50,7 @@ export const productsList = [
     gender: "women",
     flipkartAssured: false,
     size: ["M", "L"],
+    quantity: 6
   },
   {
     imageURL:
@@ -63,6 +66,7 @@ export const productsList = [
     gender: "men",
     flipkartAssured: true,
     size: ["S", "M", "L", "XL"],
+    quantity: 7
   },
   {
     imageURL:
@@ -78,6 +82,7 @@ export const productsList = [
     gender: "men",
     flipkartAssured: true,
     size: ["S", "M", "L", "XL"],
+    quantity: 2
   },
   {
     imageURL:
@@ -93,6 +98,7 @@ export const productsList = [
     gender: "men",
     flipkartAssured: false,
     size: ["S", "M", "L", "XL"],
+    quantity: 1
   },
   {
     imageURL:
@@ -108,6 +114,7 @@ export const productsList = [
     gender: "women",
     flipkartAssured: false,
     size: ["S", "M", "L", "XL"],
+    quantity: 10
   },
   {
     imageURL:
@@ -123,5 +130,6 @@ export const productsList = [
     gender: "women",
     flipkartAssured: true,
     size: ["S", "M", "L", "XL"],
+    quantity: 0
   },
 ];
